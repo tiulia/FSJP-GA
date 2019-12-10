@@ -35,7 +35,7 @@ def DecodeChromosomes(nb_jobs, nb_machines, nb_op, OS, MS, op_times):
             sol[machine] = sol[machine] + [0]
 
         #todo must also check available slots 
-        # k > machine_start_time[machine]
+        # k > job_start_time[job] k < machine_start_time[machine]
         # sol[k][machine] == [0], ... sol[k + j_t - 1][machine] == [0]
             
             

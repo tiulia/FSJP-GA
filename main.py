@@ -24,6 +24,8 @@ def DecodeChromosomes(nb_jobs, nb_machines, nb_op, OS, MS, op_times):
     for n_job in OS:
         job = n_job - 1
         op = current_op[job]
+        
+        #todo each job may have different number of operations
         ms_pos = nb_op * job + op
         machine = MS[ms_pos] - 1
         time = max(job_start_time[job], machine_start_time[machine])
@@ -32,6 +34,11 @@ def DecodeChromosomes(nb_jobs, nb_machines, nb_op, OS, MS, op_times):
         for i in range(machine_start_time[machine], time):
             sol[machine] = sol[machine] + [0]
 
+        #todo must also check available slots 
+        # k > machine_start_time[machine]
+        # sol[k][machine] == [0], ... sol[k + j_t - 1][machine] == [0]
+            
+            
         for i in range(time, time + j_t):
             sol[machine] = sol[machine] + ['J{}'.format((job + 1) * 10 + current_op[job] + 1)]
 
@@ -166,6 +173,10 @@ def genetics():
         random.shuffle(OS)
 
         MS = []
+        
+        #todo each operation has a different list of available machines
+        # op_time = [[5,math.inf, 7],[math.inf, 3, 4], ... ]
+        # o_1_1 available machines 1 and 3, o_1_2 available machines 2 and 3
         for i in range(n_jobs * n_op):
             nr = random.randrange(3) + 1
             MS = MS + [nr]
